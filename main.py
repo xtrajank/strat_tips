@@ -5,6 +5,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import requests
 from config import Config
+import os
+import uvicorn
 
 app = FastAPI()
 config = Config()
@@ -107,8 +109,8 @@ def get_quickbooks_data(endpoint: str):
     return response.json()
 
 def main():
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=10000, reload=True)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
 
 if __name__ == "__main__":
     main()
