@@ -59,8 +59,7 @@ def quickbooks_callback(request: Request, code: str, state: str, realmId: str):
     oauth_tokens["refresh_token"] = token_data["refresh_token"]
     oauth_tokens["realm_id"] = realmId
 
-    return RedirectResponse(url="https://strat-tips.onrender.com/dashboard")
-
+    return RedirectResponse(url="https://strat-tips.onrender.com/")
 @app.get("/quickbooks/refresh")
 def refresh_access_token():
     """ Refresh expired QuickBooks tokens """
