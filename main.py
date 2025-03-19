@@ -14,12 +14,6 @@ config = Config()
 # Temporary storage (Replace with DB in production)
 oauth_tokens = {}
 
-app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
-
-@app.get("/")
-async def serve_frontend():
-    return FileResponse("frontend/build/index.html")
-
 @app.get("/")
 def home():
     return {"message": "Business Analytics API Running"}
