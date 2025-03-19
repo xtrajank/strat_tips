@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Box, Button, Typography, Paper, CircularProgress } from "@mui/material";
+import { Box, Button, Typography, Paper, CircularProgress, Alert } from "@mui/material";
 
 const API_BASE_URL = "https://strat-tips.onrender.com"
 
@@ -104,6 +104,9 @@ const Dashboard = () => {
           Get AI Recommendations
         </Button>
       </Box>
+
+      {message && <Alert severity="success" sx={{ mt: 2 }}>{message}</Alert>}
+      {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
 
       {loading && <CircularProgress color="primary" />}
 
