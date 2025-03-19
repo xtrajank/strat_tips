@@ -18,7 +18,7 @@ def home():
 def quickbooks_login():
     """ Step 1: Redirect user to QuickBooks authorization page """
     oauth = OAuth2Session(config.quickbooks_client_id, redirect_uri=config.quickbooks_redirect_uri, scope=config.scope)
-    authorization_url, state = oauth.authorization_url(config.quickbooks_auth_url)
+    authorization_url, state = oauth.authorization_url("https://appcenter.intuit.com/connect/oauth2")
 
     # Store state (use database in production)
     oauth_tokens["state"] = state
