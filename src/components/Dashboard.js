@@ -8,15 +8,18 @@ const Dashboard = () => {
   const [insight, setInsight] = useState("");
   const [quickBooksData, setQuickBooksData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null); 
   const [error, setError] = useState(null);
 
   const connectQuickBooks = () => {
+    setMessage("Redirecting to QuickBooks authentication...");
     window.location.href = `${API_BASE_URL}/quickbooks/login`;
   };
 
   const fetchQuickBooksData = async () => {
     setLoading(true);
     setError(null);
+    setMessage("Fetching QuickBooks data...");
     
     try {
       let response = await axios.get(`${API_BASE_URL}/quickbooks/data/reports/CashFlow`);
@@ -27,6 +30,7 @@ const Dashboard = () => {
       }
 
       setQuickBooksData(response.data);
+      setMessage("QuickBooks data fetched successfully!");
     } catch (error) {
       setError(`Error: ${error.response?.data?.detail || error.message}`);
     } finally {
@@ -62,9 +66,12 @@ const Dashboard = () => {
         p: 4
       }}
     >
-      <Typography variant="h3" fontWeight="bold">
-        Business Insights Dashboard
+      <Typography variant="h2" fontWeight="bold">
+        STRAT TIPS
       </Typography>
+
+      <Typography variant="h4">The business dashboard that gives you quality insights.</Typography>
+      <Typography variant="p">Connent with your QuickBooks, fetch the data, then generate the AI powered reccommendations.</Typography>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%", maxWidth: 600 }}>
         <Button 
