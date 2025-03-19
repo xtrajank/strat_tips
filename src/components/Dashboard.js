@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Box, Button, Typography, Paper, CircularProgress } from "@mui/material";
 
+const API_BASE_URL = "https://strat-tips.onrender.com"
+
 const Dashboard = () => {
   const [insight, setInsight] = useState("");
   const [quickBooksData, setQuickBooksData] = useState(null);
@@ -9,7 +11,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   const connectQuickBooks = () => {
-    window.location.href = "http://127.0.0.1:8000/quickbooks/login";
+    window.location.href = `${API_BASE_URL}/quickbooks/login`;
   };
 
   const fetchQuickBooksData = async () => {
@@ -17,11 +19,11 @@ const Dashboard = () => {
     setError(null);
     
     try {
-      let response = await axios.get("http://127.0.0.1:8000/quickbooks/data/reports/CashFlow");
+      let response = await axios.get(`${API_BASE_URL}/quickbooks/data/reports/CashFlow`);
 
       if (response.data.error === "Access token expired, please re-authenticate") {
-        await axios.get("http://127.0.0.1:8000/quickbooks/refresh");
-        response = await axios.get("http://127.0.0.1:8000/quickbooks/data/reports/CashFlow");
+        await axios.get(`${API_BASE_URL}/quickbooks/refresh`);
+        response = await axios.get(`${API_BASE_URL}/quickbooks/data/reports/CashFlow`);
       }
 
       setQuickBooksData(response.data);
@@ -37,7 +39,7 @@ const Dashboard = () => {
     setError(null);
 
     try {
-      const response = await axios.get("http://127.0.0.1:8000/ai-insights");
+      const response = await axios.get(`${API_BASE_URL}/ai-insights`);
       setInsight(response.data.insight);
     } catch (error) {
       setError(`Error: ${error.response?.data?.detail || error.message}`);
