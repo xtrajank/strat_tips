@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from requests_oauthlib import OAuth2Session
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 from config import Config
 
@@ -9,6 +10,14 @@ config = Config()
 
 # Temporary storage (Replace with DB in production)
 oauth_tokens = {}
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
