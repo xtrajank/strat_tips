@@ -1,0 +1,2 @@
+/quickbooks/*  https://strat-tips-api.onrender.com/quickbooks/:splat  200
+/api/*  https://strat-tips-api.onrender.com/api/:splat  200
