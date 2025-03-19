@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Box, Button, Typography, Paper, CircularProgress } from "@mui/material";
 
 const Dashboard = () => {
   const [insight, setInsight] = useState("");
-  const [quickBooksData, setQuickBooksData] = useState(null); // Store QuickBooks data
+  const [quickBooksData, setQuickBooksData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const connectQuickBooks = () => {
-    window.location.href = "http://127.0.0.1:8000/quickbooks/login"; // Redirect user for authentication
+    window.location.href = "http://127.0.0.1:8000/quickbooks/login";
   };
 
   const fetchQuickBooksData = async () => {
@@ -23,7 +24,7 @@ const Dashboard = () => {
         response = await axios.get("http://127.0.0.1:8000/quickbooks/data/reports/CashFlow");
       }
 
-      setQuickBooksData(response.data); // Store the fetched data in state
+      setQuickBooksData(response.data);
     } catch (error) {
       setError(`Error: ${error.response?.data?.detail || error.message}`);
     } finally {
@@ -46,50 +47,79 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 flex flex-col items-center space-y-6">
-      <h1 className="text-2xl font-bold">Business Insights</h1>
+    <Box 
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 4,
+        bgcolor: "black",
+        color: "white",
+        p: 4
+      }}
+    >
+      <Typography variant="h3" fontWeight="bold">
+        Business Insights Dashboard
+      </Typography>
 
-      <button 
-        onClick={connectQuickBooks} 
-        className="w-full max-w-sm bg-blue-500 text-white p-2 rounded"
-        disabled={loading}
-      >
-        Connect with QuickBooks
-      </button>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%", maxWidth: 600 }}>
+        <Button 
+          variant="contained" 
+          color="primary"
+          onClick={connectQuickBooks} 
+          sx={{ fontSize: 20, py: 2 }}
+          disabled={loading}
+        >
+          Connect with QuickBooks
+        </Button>
 
-      <button 
-        onClick={fetchQuickBooksData} 
-        className="w-full max-w-sm bg-indigo-500 text-white p-2 rounded"
-        disabled={loading}
-      >
-        Fetch QuickBooks Data
-      </button>
+        <Button 
+          variant="contained" 
+          color="primary"
+          onClick={fetchQuickBooksData} 
+          sx={{ fontSize: 20, py: 2 }}
+          disabled={loading}
+        >
+          Fetch QuickBooks Data
+        </Button>
 
-      <button 
-        onClick={fetchInsights} 
-        className="w-full max-w-sm bg-green-500 text-white p-2 rounded"
-        disabled={loading}
-      >
-        Get AI Recommendations
-      </button>
+        <Button 
+          variant="contained" 
+          color="primary"
+          onClick={fetchInsights} 
+          sx={{ fontSize: 20, py: 2 }}
+          disabled={loading}
+        >
+          Get AI Recommendations
+        </Button>
+      </Box>
 
-      {loading && <p>Loading...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {loading && <CircularProgress color="primary" />}
+
+      {error && <Typography color="error" fontSize={18} mt={2}>{error}</Typography>}
 
       {insight && (
-        <div className="mt-4 p-4 bg-gray-100 rounded-lg w-full max-w-lg text-center">
-          <h2 className="text-lg font-semibold">AI Recommendation</h2>
-          <p>{insight}</p>
-        </div>
+        <Paper elevation={6} sx={{ mt: 4, p: 4, width: "90%", maxWidth: "800px", minHeight: "200px", bgcolor: "gray.900" }}>
+          <Typography variant="h5" fontWeight="bold" mb={2}>
+            AI Recommendation
+          </Typography>
+          <Typography variant="body1">{insight}</Typography>
+        </Paper>
       )}
 
       {quickBooksData && (
-        <div className="mt-4 p-4 bg-gray-200 rounded-lg w-full max-w-lg">
-          <h2 className="text-lg font-semibold">QuickBooks Data</h2>
-          <pre className="text-sm whitespace-pre-wrap">{JSON.stringify(quickBooksData, null, 2)}</pre>
-        </div>
+        <Paper elevation={6} sx={{ mt: 4, p: 4, width: "90%", maxWidth: "800px", minHeight: "200px", bgcolor: "gray.900" }}>
+          <Typography variant="h5" fontWeight="bold" mb={2}>
+            QuickBooks Data
+          </Typography>
+          <Typography component="pre" sx={{ fontSize: 14, whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+            {JSON.stringify(quickBooksData, null, 2)}
+          </Typography>
+        </Paper>
       )}
-    </div>
+    </Box>
   );
 };
 
