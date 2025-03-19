@@ -23,7 +23,7 @@ def quickbooks_login():
     # Store state (use database in production)
     oauth_tokens["state"] = state
 
-    return RedirectResponse(authorization_url)
+    return RedirectResponse(url=authorization_url)
 
 @app.get("/quickbooks/callback")
 def quickbooks_callback(request: Request, code: str, state: str, realmId: str):
