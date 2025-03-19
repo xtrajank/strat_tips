@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   const connectQuickBooks = () => {
     setMessage("Redirecting to QuickBooks authentication...");
-    window.location.href = `${API_BASE_URL}/quickbooks/login`;
+    window.location.replace(`${API_BASE_URL}/quickbooks/login`);
   };
 
   const fetchQuickBooksData = async () => {
