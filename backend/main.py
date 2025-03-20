@@ -61,9 +61,7 @@ def quickbooks_callback(request: Request, code: str, state: str, realmId: str):
     oauth_tokens["refresh_token"] = token_data["refresh_token"]
     oauth_tokens["realm_id"] = realmId
 
-    print(oauth_tokens["access_token"])
-
-    return RedirectResponse(url="https://strattips.onrender.com/?quickbooks_auth=success")
+    return RedirectResponse(url=f"https://strattips.onrender.com/?quickbooks_auth=success&realm_id={realmId}")
 
 @app.get("/quickbooks/refresh")
 def refresh_access_token():
@@ -96,6 +94,7 @@ def get_quickbooks_data(endpoint: str):
     """ Endpoint to fetch QuickBooks data dynamically """
     access_token = oauth_tokens.get("access_token")
     realm_id = oauth_tokens.get("realm_id")
+    print(f"Received request for QuickBooks data: {endpoint}")
 
     if not access_token:
         raise HTTPException(status_code=403, detail="Access token is missing")
