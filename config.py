@@ -8,7 +8,7 @@ class Config:
     def __init__(self):
         self.quickbooks_client_id = os.getenv("QUICKBOOKS_CLIENT_ID")
         self.quickbooks_client_secret = os.getenv("QUICKBOOKS_CLIENT_SECRET")
-        self.quickbooks_redirect_uri = "https://strattips.onrender.com/quickbooks/callback"
+        self.quickbooks_redirect_uri = os.getenv("QUICKBOOKS_REDIRECT_URI")
 
         self.stripe_client_id = os.getenv("STRIPE_CLIENT_ID")
         self.stripe_client_secret = os.getenv("STRIPE_CLIENT_SECRET")
