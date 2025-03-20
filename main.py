@@ -1,8 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from requests_oauthlib import OAuth2Session
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 from config import Config
 import os
@@ -10,6 +9,14 @@ import uvicorn
 
 app = FastAPI()
 config = Config()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://strattips.onrender.com"],
+    allow_credentials=True,
+    allow_methods=["https://strattips.onrender.com"],
+    allow_headers=["https://strattips.onrender.com"],
+)
 
 # Temporary storage (Replace with DB in production)
 oauth_tokens = {}
@@ -27,7 +34,7 @@ def quickbooks_login():
     # Store state (use database in production)
     oauth_tokens["state"] = state
 
-    return RedirectResponse(url=authorization_url)
+    return RedirectResponse(authorization_url)
 
 @app.get("/quickbooks/callback")
 def quickbooks_callback(request: Request, code: str, state: str, realmId: str):
@@ -54,7 +61,7 @@ def quickbooks_callback(request: Request, code: str, state: str, realmId: str):
     oauth_tokens["refresh_token"] = token_data["refresh_token"]
     oauth_tokens["realm_id"] = realmId
 
-    return RedirectResponse(url="https://strat-tips.onrender.com/")
+    return RedirectResponse(url="https://strattips.onrender.com/")
 @app.get("/quickbooks/refresh")
 def refresh_access_token():
     """ Refresh expired QuickBooks tokens """
