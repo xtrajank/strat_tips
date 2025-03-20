@@ -14,8 +14,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://strattips.onrender.com"],
     allow_credentials=True,
-    allow_methods=["https://strattips.onrender.com"],
-    allow_headers=["https://strattips.onrender.com"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 # Temporary storage (Replace with DB in production)
@@ -28,7 +28,7 @@ def home():
 @app.get("/quickbooks/login")
 def quickbooks_login():
     """ Step 1: Redirect user to QuickBooks authorization page """
-    oauth = OAuth2Session(config.quickbooks_client_id, redirect_uri="https://strattips.onrender.com/quickbooks/callback", scope=config.scope)
+    oauth = OAuth2Session(config.quickbooks_client_id, redirect_uri=config.quickbooks_redirect_uri, scope=config.scope)
     authorization_url, state = oauth.authorization_url("https://appcenter.intuit.com/connect/oauth2")
 
     # Store state (use database in production)
