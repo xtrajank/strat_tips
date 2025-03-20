@@ -1,4 +1,5 @@
 import requests
+from fastapi.responses import JSONResponse
 
 class Qb:
     def __init__(self, access_token, realm_id):
@@ -18,15 +19,9 @@ class Qb:
 
         if response.status_code != 200:
             return {"error": response.json(), "status_code": response.status_code}
-        
-        print(f"Fetching: {BASE_URL}/{endpoint}")
-        print(f"Headers: {headers}")
-        print(f"Response Code: {response.status_code}")
-        print(f"Response: {response.text}")
 
-
-        return response.json()
-
+        return JSONResponse(content=response.json(), status_code=200)
+    
     def get_invoices(self):
         return self.fetch_quickbooks_data("query?query=SELECT * FROM Invoice")
 

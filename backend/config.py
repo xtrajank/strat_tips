@@ -2,7 +2,8 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
+load_dotenv(dotenv_path="../api.env")
 
 class Config:
     def __init__(self):
