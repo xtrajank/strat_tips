@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Box, Button, Typography, Paper, CircularProgress, Alert } from "@mui/material";
 
-const API_BASE_URL = "https://strattips.onrender.com"
+const API_BASE_URL = "https://strat-tips.onrender.com"
 
 const Dashboard = () => {
   const [insight, setInsight] = useState("");
