@@ -28,7 +28,7 @@ def home():
 @app.get("/quickbooks/login")
 def quickbooks_login():
     """ Step 1: Redirect user to QuickBooks authorization page """
-    oauth = OAuth2Session(config.quickbooks_client_id, redirect_uri=config.quickbooks_redirect_uri, scope=config.scope)
+    oauth = OAuth2Session(config.quickbooks_client_id, redirect_uri="https://strattips.onrender.com/quickbooks/callback", scope=config.scope)
     authorization_url, state = oauth.authorization_url("https://appcenter.intuit.com/connect/oauth2")
 
     # Store state (use database in production)
@@ -62,6 +62,7 @@ def quickbooks_callback(request: Request, code: str, state: str, realmId: str):
     oauth_tokens["realm_id"] = realmId
 
     return RedirectResponse(url="https://strattips.onrender.com/")
+
 @app.get("/quickbooks/refresh")
 def refresh_access_token():
     """ Refresh expired QuickBooks tokens """
