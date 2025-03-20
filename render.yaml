@@ -15,7 +15,7 @@ services:
   - name: frontend-service
     type: static  # If using Docker, change this to "web"
     repo: https://github.com/xtrajank/strat_tips
-    rootDir: src
+    rootDir: frontend
     buildCommand: "npm install && npm run build"
     publishDirectory: "build"
     envVars:

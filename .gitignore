@@ -5,8 +5,8 @@
 /.pnp
 .pnp.js
 
-/src/node_modules
-/src/build
+/frontend/node_modules
+/frontend/build
 
 # testing
 /coverage

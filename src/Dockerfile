@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Copy frontend files
-COPY src /app
+COPY frontend /app
 
 # Install dependencies and build
 RUN npm install
